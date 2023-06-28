@@ -1,0 +1,19 @@
+[ 25%] [32mBuilding CXX object CMakeFiles/sick_safetyscanners2_node.dir/src/SickSafetyscannersRos2.cpp.o[0m
+[ 62%] Built target sick_safetyscanners2_lifecycle_node
+In file included from [01m[K/home/anish/work/sick_safetyscanners2/src/SickSafetyscannersRos2.cpp:35[m[K:
+[01m[K/home/anish/work/sick_safetyscanners2/include/sick_safetyscanners2/SickSafetyscannersRos2.h:[m[K In constructor ‘[01m[Ksick::SickSafetyscannersRos2::SickSafetyscannersRos2()[m[K’:
+[01m[K/home/anish/work/sick_safetyscanners2/include/sick_safetyscanners2/SickSafetyscannersRos2.h:105:8:[m[K [01;35m[Kwarning: [m[K‘[01m[Ksick::SickSafetyscannersRos2::m_use_pers_conf[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  105 |   bool [01;35m[Km_use_pers_conf[m[K;
+      |        [01;35m[K^~~~~~~~~~~~~~~[m[K
+[01m[K/home/anish/work/sick_safetyscanners2/include/sick_safetyscanners2/SickSafetyscannersRos2.h:94:15:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kstd::string sick::SickSafetyscannersRos2::m_lidar_name[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   94 |   std::string [01;35m[Km_lidar_name[m[K;
+      |               [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/anish/work/sick_safetyscanners2/src/SickSafetyscannersRos2.cpp:39:1:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   39 | [01;35m[KSickSafetyscannersRos2[m[K::SickSafetyscannersRos2()
+      | [01;35m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/anish/work/sick_safetyscanners2/src/SickSafetyscannersRos2.cpp:64:3:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K,[m[K’ or ‘[01m[K;[m[K’ before ‘[01m[Km_laser_scan_publisher[m[K’
+   64 |   [01;31m[Km_laser_scan_publisher[m[K = this->create_publisher<sensor_msgs::msg::LaserScan>(scan_name, 1);
+      |   [01;31m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/sick_safetyscanners2_node.dir/build.make:90: CMakeFiles/sick_safetyscanners2_node.dir/src/SickSafetyscannersRos2.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:139: CMakeFiles/sick_safetyscanners2_node.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

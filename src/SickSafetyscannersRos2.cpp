@@ -43,6 +43,7 @@ SickSafetyscannersRos2::SickSafetyscannersRos2()
   , m_range_max(0.0)
   , m_angle_offset(-90.0)
   , m_use_pers_conf(false)
+  , m_lidar_name("front")
 {
   RCLCPP_INFO(this->get_logger(), "Initializing SickSafetyscannersRos2 Node");
 
@@ -59,14 +60,19 @@ SickSafetyscannersRos2::SickSafetyscannersRos2()
   // TODO diagnostics
 
   // init publishers and services
-  m_laser_scan_publisher = this->create_publisher<sensor_msgs::msg::LaserScan>("scan", 1);
+  std::string scan_name = m_lidar_name + "_scan";
+  std::string extended_scan_name = m_lidar_name + "_extended_scan";
+  std::string output_paths_name = m_lidar_name + "_output_paths_name";
+  std::string raw_data_name = m_lidar_name + "_raw_data";
+
+  m_laser_scan_publisher = this->create_publisher<sensor_msgs::msg::LaserScan>(scan_name, 1);
   m_extended_laser_scan_publisher =
-    this->create_publisher<sick_safetyscanners2_interfaces::msg::ExtendedLaserScan>("extended_scan",
+    this->create_publisher<sick_safetyscanners2_interfaces::msg::ExtendedLaserScan>(extended_scan_name,
                                                                                     1);
   m_output_paths_publisher =
-    this->create_publisher<sick_safetyscanners2_interfaces::msg::OutputPaths>("output_paths", 1);
+    this->create_publisher<sick_safetyscanners2_interfaces::msg::OutputPaths>(output_paths_name, 1);
   m_raw_data_publisher =
-    this->create_publisher<sick_safetyscanners2_interfaces::msg::RawMicroScanData>("raw_data", 1);
+    this->create_publisher<sick_safetyscanners2_interfaces::msg::RawMicroScanData>(raw_data_name, 1);
 
   m_field_data_service = this->create_service<sick_safetyscanners2_interfaces::srv::FieldData>(
     "field_data",
@@ -101,7 +107,7 @@ SickSafetyscannersRos2::SickSafetyscannersRos2()
   }
 
   m_msg_creator = std::make_unique<sick::MessageCreator>(
-    m_frame_id, m_time_offset, m_range_min, m_range_max, m_angle_offset, m_min_intensities);
+    m_frame_id, m_time_offset, m_range_min, m_range_max, m_angle_offset, m_min_intensities, m_lidar_name);
 
   // Start async receiving and processing of sensor data
   m_device->run();
@@ -149,6 +155,7 @@ void SickSafetyscannersRos2::initialize_parameters()
   this->declare_parameter<bool>("application_io_data", true);
   this->declare_parameter<bool>("use_persistent_config", false);
   this->declare_parameter<float>("min_intensities", 0.f);
+  this->declare_parameter<std::string>("lidar_name", "front");
 }
 
 void SickSafetyscannersRos2::load_parameters()
@@ -202,6 +209,8 @@ void SickSafetyscannersRos2::load_parameters()
   this->get_parameter<float>("angle_end", angle_end);
   RCLCPP_INFO(node_logger, "angle_end: %f", angle_end);
 
+  this->get_parameter<std::string>("lidar_name", m_lidar_name);
+  RCLCPP_INFO(node_logger, "lidar_name: %s", m_lidar_name.c_str());
   // Included check before calculations to prevent rounding errors while calculating
   if (angle_start == angle_end)
   {
@@ -213,7 +222,6 @@ void SickSafetyscannersRos2::load_parameters()
     m_communications_settings.start_angle = sick::radToDeg(angle_start) - m_angle_offset;
     m_communications_settings.end_angle   = sick::radToDeg(angle_end) - m_angle_offset;
   }
-
 
   this->get_parameter<double>("time_offset", m_time_offset);
   RCLCPP_INFO(node_logger, "time_offset: %f", m_time_offset);
@@ -268,6 +276,10 @@ SickSafetyscannersRos2::parametersCallback(std::vector<rclcpp::Parameter> parame
       if (!param.get_name().compare("frame_id"))
       {
         m_frame_id = param.value_to_string();
+      }
+      else if (!param.get_name().compare("lidar_name"))
+      {
+        m_lidar_name = param.value_to_string();
       }
       else if (!param.get_name().compare("host_ip"))
       {
@@ -385,7 +397,7 @@ SickSafetyscannersRos2::parametersCallback(std::vector<rclcpp::Parameter> parame
     m_device->changeSensorSettings(m_communications_settings);
   }
   m_msg_creator = std::make_unique<sick::MessageCreator>(
-    m_frame_id, m_time_offset, m_range_min, m_range_max, m_angle_offset, m_min_intensities);
+    m_frame_id, m_time_offset, m_range_min, m_range_max, m_angle_offset, m_min_intensities, m_lidar_name);
   return result;
 }
 

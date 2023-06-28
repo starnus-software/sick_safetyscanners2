@@ -111,7 +111,7 @@ SickSafetyscannersLifeCycle::on_configure(const rclcpp_lifecycle::State&)
     readPersistentConfig();
   }
   m_msg_creator = std::make_unique<sick::MessageCreator>(
-    m_frame_id, m_time_offset, m_range_min, m_range_max, m_angle_offset, m_min_intensities);
+    m_frame_id, m_time_offset, m_range_min, m_range_max, m_angle_offset, m_min_intensities, m_lidar_name);
 
   RCLCPP_INFO(this->get_logger(), "Node Configured");
 
@@ -212,6 +212,7 @@ void SickSafetyscannersLifeCycle::initialize_parameters()
   this->declare_parameter<bool>("application_io_data", true);
   this->declare_parameter<bool>("use_persistent_config", false);
   this->declare_parameter<float>("min_intensities", 0.f);
+  this->declare_parameter<std::string>("lidar_name", "front");
 }
 
 void SickSafetyscannersLifeCycle::load_parameters()
@@ -220,6 +221,9 @@ void SickSafetyscannersLifeCycle::load_parameters()
 
   this->get_parameter<std::string>("frame_id", m_frame_id);
   RCLCPP_INFO(node_logger, "frame_id: %s", m_frame_id.c_str());
+
+  this->get_parameter<std::string>("lidar_name", m_lidar_name);
+  RCLCPP_INFO(node_logger, "lidar_name: %s", m_lidar_name.c_str());
 
   std::string sensor_ip;
   this->get_parameter<std::string>("sensor_ip", sensor_ip);
@@ -331,6 +335,10 @@ SickSafetyscannersLifeCycle::parametersCallback(std::vector<rclcpp::Parameter> p
       if (!param.get_name().compare("frame_id"))
       {
         m_frame_id = param.value_to_string();
+      }
+      else if (!param.get_name().compare("lidar_name"))
+      {
+        m_lidar_name = param.value_to_string();
       }
       else if (!param.get_name().compare("host_ip"))
       {
@@ -448,7 +456,7 @@ SickSafetyscannersLifeCycle::parametersCallback(std::vector<rclcpp::Parameter> p
     m_device->changeSensorSettings(m_communications_settings);
   }
   m_msg_creator = std::make_unique<sick::MessageCreator>(
-    m_frame_id, m_time_offset, m_range_min, m_range_max, m_angle_offset, m_min_intensities);
+    m_frame_id, m_time_offset, m_range_min, m_range_max, m_angle_offset, m_min_intensities, m_lidar_name);
   return result;
 }
 

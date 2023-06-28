@@ -63,13 +63,15 @@ public:
    * \param range_max The maximum range for the sensor
    * \param angle_offset The offset added to the angle
    * \param min_intensities Threshold to filter too low intensities
+   * \param lidar_name Name of the lidar, to allow interfacing multiple lidars
    */
   MessageCreator(std::string frame_id,
                  double time_offset,
                  double range_min,
                  double range_max,
                  float angle_offset, // TODO still needed?
-                 double min_intensities);
+                 double min_intensities,
+                 std::string lidar_name);
 
 
   /*!
@@ -118,6 +120,7 @@ public:
 
 private:
   std::string m_frame_id;
+  std::string m_lidar_name;
   double m_time_offset;
   double m_range_min;
   double m_range_max;

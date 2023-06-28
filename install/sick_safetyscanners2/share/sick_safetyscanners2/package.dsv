@@ -1,0 +1,8 @@
+source;share/sick_safetyscanners2/hook/cmake_prefix_path.ps1
+source;share/sick_safetyscanners2/hook/cmake_prefix_path.dsv
+source;share/sick_safetyscanners2/hook/cmake_prefix_path.sh
+source;share/sick_safetyscanners2/local_setup.bash
+source;share/sick_safetyscanners2/local_setup.dsv
+source;share/sick_safetyscanners2/local_setup.ps1
+source;share/sick_safetyscanners2/local_setup.sh
+source;share/sick_safetyscanners2/local_setup.zsh

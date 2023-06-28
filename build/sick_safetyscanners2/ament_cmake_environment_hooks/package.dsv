@@ -1,0 +1,4 @@
+source;share/sick_safetyscanners2/local_setup.bash
+source;share/sick_safetyscanners2/local_setup.dsv
+source;share/sick_safetyscanners2/local_setup.sh
+source;share/sick_safetyscanners2/local_setup.zsh

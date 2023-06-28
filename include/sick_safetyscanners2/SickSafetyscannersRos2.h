@@ -91,6 +91,7 @@ private:
   boost::asio::ip::address_v4 m_sensor_ip;
   boost::asio::ip::address_v4 m_interface_ip;
   std::string m_frame_id;
+  std::string m_lidar_name;
   double m_time_offset;
   double m_range_min;
   double m_range_max;

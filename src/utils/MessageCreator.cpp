@@ -42,13 +42,15 @@ MessageCreator::MessageCreator(std::string frame_id,
                                double range_min,
                                double range_max,
                                float angle_offset,
-                               double min_intensities)
+                               double min_intensities,
+                               std::string lidar_name)
   : m_frame_id(frame_id)
   , m_time_offset(time_offset)
   , m_range_min(range_min)
   , m_range_max(range_max)
   , m_angle_offset(angle_offset)
   , m_min_intensities(min_intensities)
+  , m_lidar_name(lidar_name)
 {
 }
 
