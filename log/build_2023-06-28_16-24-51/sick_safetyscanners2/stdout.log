@@ -1,4 +1,0 @@
-[35m[1mConsolidate compiler generated dependencies of target sick_safetyscanners2_node[0m
-[35m[1mConsolidate compiler generated dependencies of target sick_safetyscanners2_lifecycle_node[0m
-[ 25%] [32mBuilding CXX object CMakeFiles/sick_safetyscanners2_lifecycle_node.dir/src/SickSafetyscannersLifeCycle.cpp.o[0m
-[ 25%] [32mBuilding CXX object CMakeFiles/sick_safetyscanners2_node.dir/src/SickSafetyscannersRos2.cpp.o[0m
